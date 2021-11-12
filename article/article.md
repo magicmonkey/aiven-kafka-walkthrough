@@ -28,11 +28,11 @@ Choose the "Topics" tab, and add a new topic with the name "kiln".  In the "Adva
 
 ## Terraform
 
-As well as setting-up Kafka via the web console, you can also use the Aiven Terraform provider.  There is more info about this on the [Aiven Developer Portal](https://developer.aiven.io/docs/tools/terraform), and an example is in the Github repo alongside this article [link].  To use the Terraform provider, you will need to create a new access token (click on the "User Information" icon in the top-right of the web console, go to the "Authentication" tab, and click the "Generate token" button).
+As well as setting-up Kafka via the web console, you can also use the Aiven Terraform provider.  There is more info about this on the [Aiven Developer Portal](https://developer.aiven.io/docs/tools/terraform), and an example is in the [Github repo](https://github.com/magicmonkey/aiven-kafka-walkthrough/tree/main/terraform) alongside this article.  To use the Terraform provider, you will need to create a new access token (click on the "User Information" icon in the top-right of the web console, go to the "Authentication" tab, and click the "Generate token" button).
 
 # Sample producer code
 
-In the Github repo [link], you can find code which will send a new "payload" from our imaginary wood-drying kiln once per second.  It needs some configuring so that it knows to send to the right topic on the new Kafka cluster; edit the file `main.go` and fill in the details on lines 25-29.
+In the [Github repo](https://github.com/magicmonkey/aiven-kafka-walkthrough/tree/main/sample-code), you can find code which will send a new "payload" from our imaginary wood-drying kiln once per second.  It needs some configuring so that it knows to send to the right topic on the new Kafka cluster; edit the file `main.go` and fill in the details on lines 25-29.
 
 In order for the web console message browser to display a JSON message, the message key _also_ needs to be formatted as JSON - here there is a single field "id" inside the key's JSON structure.
 
@@ -62,11 +62,11 @@ This dashboard will default to showing you the last 6 hours of data.  As it was 
 
 You should now be looking at a wealth of metrics, which can initially be somewhat overwhelming.  The dashboard is split into four sections: Overview, System metrics, Kafka metrics, and Java metrics (as Kafka runs on top of the JVM).  There are typically three approaches to keep in mind when looking at a dashboards like this:
 
-1. Get used to how the dashboard looks during the normal "steady-state" operation.  When everything is working as expected, then generally some graphs will be flat, some will have a steady gradient, some will have occasional spikes and then return to normal.  Especially with the overview, being able to glance at a few metrics and know that the system is working as expected is very useful.  Once you have a good idea of what is "normal" then you can use Grafana's "alerting" capability [insert link] to have it warn you when things are not normal.
+1. Get used to how the dashboard looks during the normal "steady-state" operation.  When everything is working as expected, then generally some graphs will be flat, some will have a steady gradient, some will have occasional spikes and then return to normal.  Especially with the overview, being able to glance at a few metrics and know that the system is working as expected is very useful.  Once you have a good idea of what is "normal" then you can use [Grafana's "alerting" capability](https://grafana.com/docs/grafana/latest/alerting/) to have it warn you when things are not normal.
 
 2. Look out for any sudden changes to important graphs, e.g. load average or CPU or free disk space.  These can be indicators that Kafka is doing something unusual, which is often because the applications which are using Kafka have started to behave differently although sometimes it could indicate an issue with Kafka itself.  When you see something unusual, there will often be other graphs which have changed at the same time, which can help to point towards what the actual issue is.
 
-3. Slowly-changing graphs to do with some kind of resource being used up (e.g. free disk space) need to be checked periodically, although these are a prime candidate for alerts.  Make sure that the alerts will trigger with plenty of time to deal with the issue (e.g. moving to a plan with more disk space available, or clearing-out some old data) - predictive alerts which follow the shape of the graph and project it forwards are useful here.  Whilst this is possible with InfluxDB, it is the kind of task which Prometheus (available via Aiven for M3 [link]) is particularly good at.
+3. Slowly-changing graphs to do with some kind of resource being used up (e.g. free disk space) need to be checked periodically, although these are a prime candidate for alerts.  Make sure that the alerts will trigger with plenty of time to deal with the issue (e.g. moving to a plan with more disk space available, or clearing-out some old data) - predictive alerts which follow the shape of the graph and project it forwards are useful here.  Whilst this is possible with InfluxDB, it is the kind of task which Prometheus (available via [Aiven for M3](https://aiven.io/time-series-databases/aiven-for-m3)) is particularly good at.
 
 # Conclusion
 
